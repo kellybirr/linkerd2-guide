@@ -1,5 +1,5 @@
 # Linkerd 2 Exensions
-This guide covers a complimentary install of the Viz and/or Jaeger extensions in long lived and/or production Kubernetes clusters.  Everything in this guide assumes you've already installed Linkerd using the process in the [README](README.md)
+This guide covers a complimentary install of the Viz and/or Jaeger extensions in long lived and/or production Kubernetes clusters.  Everything in this guide assumes you've already installed Linkerd using the process in the [README](README.md) and still have the CA certificate you generated.
 
 ## VIZ
 
@@ -25,7 +25,7 @@ $ kubectl apply -f viz-issuer.yaml
 ```
 
 ### 4) Verify your certificates are created
-This step can be skipped, if you like to live on the edge.  If cert-manager is working as expected, this command will show a listing of all the certificates mentioned above.
+This step can be skipped, if you like to live on the edge.  If cert-manager is working as expected, this command will show a listing of the certificates mentioned above.
 
 ```bash
 $ kubectl get secret -n linkerd-viz
@@ -57,7 +57,7 @@ $ linkerd viz install \
 *NOTE: You are going to get a warning that the `linkerd-viz` namespace already exists outside of `kubectl apply`.  This is expected and can be safely ignored.*
 
 ### 8) Verify your installation
-As before, this step can be skipped, if you like to live on the edge.  We're going use the build-in check feature of Linkerd CLI.
+As before, this step can be skipped, if you like to live on the edge.  We're going use the built-in check feature of Linkerd CLI.
 
 *Give the previous command 1-2 minutes, to install and start the Linkerd-Viz workloads, before trying to verify.*
 

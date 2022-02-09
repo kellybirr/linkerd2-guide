@@ -50,9 +50,9 @@ $ kubectl create secret tls linkerd-trust-anchor --cert=ca.crt --key=ca.key --na
 ### 4) Load the included YAML, for cert-manager to create managed certificates
 The "[linkerd-cert-issuer.yaml](linkerd-cert-issuer.yaml)" includes the issuers for the trust-ancher and webhooks as well as manager certificate definitions for `linkerd-identity-issuer`, `linkerd-policy-validator`, `linkerd-proxy-injector` and `linkerd-sp-validator`.
 
-I've chosen a certificate lifetime of 180-days with a renew-before of 60-days.  Linkerd's guide actually recommend a much shorter lifetime.  In the real-world I've had older versions or cert-manger "miss" certificate renewals for a few days to weeks, so i fill this gives it more cushion against expiration.  
+I've chosen a certificate lifetime of 180-days with a renew-before of 60-days.  Linkerd's guide actually recommend a much shorter lifetime.  In the real-world I've had older versions of cert-manger "miss" certificate renewals for a few days to weeks.  This gives it more cushion against expiration.  
 
-This longer lifetime also has the benefit of `$ linkerd check` telling you all-is-good if your certificates are rotating properly. Any lifetime of less than 60 days will cause the build-in check to constantly warn you that your certificates are close to expiration.
+This longer lifetime also has the benefit of `$ linkerd check` telling you all-is-good if your certificates are rotating properly. Any lifetime of less than 60 days will cause the built-in check to constantly warn you that your certificates are close to expiration.
 
 ```bash
 $ kubectl apply -f linkerd-cert-issuer.yaml
@@ -81,7 +81,7 @@ linkerd-trust-anchor                 kubernetes.io/tls                     2    
 
 This is really important for HA installation of Linkerd, which we're going to be doing. 
 
-I'll let Buoyant explain the necessity of this in their page on [High Availability](https://linkerd.io/2.11/features/ha/#exclude-the-kube-system-namespace)
+I'll let Buoyant explain the necessity of this in their page on [High Availability](https://linkerd.io/2.11/features/ha/#exclude-the-kube-system-namespace).
 
 ```bash
 $ kubectl label namespace kube-system config.linkerd.io/admission-webhooks=disabled
@@ -107,7 +107,7 @@ $ linkerd install --ha \
 *NOTE: You are going to get a warning that the `linkerd` namespace already exists outside of `kubectl apply`.  This is expected and can be safely ignored.*
 
 ### 8) Verify your Linkerd installation
-As before, this step can be skipped, if you like to live on the edge.  We're going use the build-in check feature of Linkerd CLI.
+As before, this step can be skipped, if you like to live on the edge.  We're going use the built-in check feature of Linkerd CLI.
 
 *Give the previous command 1-2 minutes, to install and start the Linkerd workloads, before trying to verify.*
 
