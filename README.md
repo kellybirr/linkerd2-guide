@@ -15,11 +15,9 @@ I am nowhere near the foremost expert on Linkerd.  I've just been using it for q
  
 
 ## Setup Instructions
-Starting with a new (empty) Kubernetes cluster, will avoid unnecessary complications.  
+I'm executing all of these commands from the root folder in this repository, on Ubuntu 18.04 ([WSL](https://docs.microsoft.com/en-us/windows/wsl/)). This guide should work as-is on any other OS or distro.
 
 I'm doing this on [AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/), but there is nothing  Azure specific.  This should work on any cloud or even bare-metal Kubernetes cluster.
-
-I'm executing all of these commands from the root folder in this repository, in Bash on Ubuntu 18.04 ([WSL](https://docs.microsoft.com/en-us/windows/wsl/)). This guide should work as-is on any other OS or distro.
 
 ### Prerequisites
 * You need the Linkerd CLI already installed on your workstation.  See Buoyant's [Getting Started](https://linkerd.io/2.11/getting-started/#step-1-install-the-cli) guide for installation instructions.
