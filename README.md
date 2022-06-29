@@ -91,6 +91,8 @@ $ kubectl label namespace kube-system config.linkerd.io/admission-webhooks=disab
 
 We're using the Linkerd CLI installation method.  The arguments passed configure [High Availability](https://linkerd.io/2.11/features/ha/#exclude-the-kube-system-namespace) mode as well as informing Linkerd that the issuer and web-hook certificates will be managed by cert-manager.
 
+*Update for 2.11.2: Added `--set proxyInit.runAsRoot=false` to run init containers as non-root (best practice)*
+
 ```bash
 $ linkerd install --ha \
   --identity-external-issuer \
@@ -101,6 +103,7 @@ $ linkerd install --ha \
   --set-file proxyInjector.caBundle=ca.crt \
   --set profileValidator.externalSecret=true \
   --set-file profileValidator.caBundle=ca.crt \
+  --set proxyInit.runAsRoot=false \
   | kubectl apply -f -
 ```
 
