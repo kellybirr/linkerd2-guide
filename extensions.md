@@ -99,7 +99,7 @@ $ kubectl get secret -n linkerd-jaeger
 ### 5) Install Linkerd Jaeger Extension
 
 ```bash
-$ linkerd jaeger install
+$ linkerd jaeger install \
   --set webhook.externalSecret=true \
   --set-file webhook.caBundle=ca.crt \
   | kubectl apply -f -
