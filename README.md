@@ -8,7 +8,7 @@ This is not intended to be an in-depth discussion, or advanced topics guide for 
 *Contributions welcome: If you have suggestions on how this can be improved, I welcome any and all feedback.  I also have a million things on my plate, so please don't be offended if I don't reply immediately.*
 
 ### Relevancy
-This guide is based on Linkerd 2.11.1. Newer or older versions of Linkerd may have differences.  Please always double-check this against the [Linkerd Docs](https://linkerd.io/docs/) before starting.
+This guide is based on Linkerd 2.12.3. Newer or older versions of Linkerd may have differences.  Please always double-check this against the [Linkerd Docs](https://linkerd.io/docs/) before starting.
 
 ### Disclaimer
 I am nowhere near the foremost expert on Linkerd.  I've just been using it for quite a while and have hit a few pit-falls from configurations that were not exactly production-ready.  The [Linkerd Slack](http://slack.linkerd.io/?_gl=1*1gvbgbs*_ga*ODEyOTQyMDgwLjE2MzQyNTc0NjI.*_ga_TV358ZPK6D*MTY0NDQyMTUwNS43LjAuMTY0NDQyMTUwNS4w#_ga=2.153716476.550972073.1644365071-812942080.1634257462) has much smarter people than me.  I highly recommend you join and ask questions there. 
