@@ -29,7 +29,7 @@ I'm doing this with [smallstep cli](https://smallstep.com/).  If you don't alrea
 Let's generate a 20-year root certificate, so when it needs to be rotated it won't be our problem. 
 
 ```bash
-$ step certificate create root.linkerd.cluster.local ca.crt ca.key \
+step certificate create root.linkerd.cluster.local ca.crt ca.key \
   --profile root-ca --no-password --insecure --not-after 175200h
 ```
 
@@ -37,14 +37,14 @@ $ step certificate create root.linkerd.cluster.local ca.crt ca.key \
 You'll need this to exist for the next few commands to work.
 
 ```bash
-$ kubectl create namespace linkerd
+kubectl create namespace linkerd
 ```
 
 ### 3) Load your new certificate as a secret.
 This will be used by Linkerd as the trust anchor for the control plane, mTLS and by cert-manager to issue and rotate shorter lived certificates.
 
 ```bash
-$ kubectl create secret tls linkerd-trust-anchor --cert=ca.crt --key=ca.key --namespace=linkerd
+kubectl create secret tls linkerd-trust-anchor --cert=ca.crt --key=ca.key --namespace=linkerd
 ```
 
 ### 4) Load the included YAML, for cert-manager to create managed certificates
@@ -55,14 +55,14 @@ I've chosen a certificate lifetime of 180-days with a renew-before of 60-days.  
 This longer lifetime also has the benefit of `$ linkerd check` telling you all-is-good if your certificates are rotating properly. Any lifetime of less than 60 days will cause the built-in check to constantly warn you that your certificates are close to expiration.
 
 ```bash
-$ kubectl apply -f linkerd-cert-issuer.yaml
+kubectl apply -f linkerd-cert-issuer.yaml
 ```
 
 ### 5) Verify your certificates are created
 This step can be skipped, if you like to live on the edge.  If cert-manager is working as expected, this command will show a listing of all the certificates mentioned above.
 
 ```bash
-$ kubectl get secret -n linkerd
+kubectl get secret -n linkerd
 ```
 
 The output should look something like this:
@@ -84,17 +84,23 @@ This is really important for HA installation of Linkerd, which we're going to be
 I'll let Buoyant explain the necessity of this in their page on [High Availability](https://linkerd.io/2.11/features/ha/#exclude-the-kube-system-namespace).
 
 ```bash
-$ kubectl label namespace kube-system config.linkerd.io/admission-webhooks=disabled
+kubectl label namespace kube-system config.linkerd.io/admission-webhooks=disabled
 ```
 
 ### 7) Install Linkerd
 
 We're using the Linkerd CLI installation method.  The arguments passed configure [High Availability](https://linkerd.io/2.11/features/ha/#exclude-the-kube-system-namespace) mode as well as informing Linkerd that the issuer and web-hook certificates will be managed by cert-manager.
 
+*Update for 2.12.x: Added step for `--crds` to create linkerd CRDs as first-step of install*
+
+```bash
+linkerd install --crds | kubectl apply -f -
+```
+
 *Update for 2.11.2: Added `--set proxyInit.runAsRoot=false` to run init containers as non-root (best practice)*
 
 ```bash
-$ linkerd install --ha \
+linkerd install --ha \
   --identity-external-issuer \
   --identity-trust-anchors-file ca.crt \
   --set policyValidator.externalSecret=true \
@@ -115,7 +121,7 @@ As before, this step can be skipped, if you like to live on the edge.  We're goi
 *Give the previous command 1-2 minutes, to install and start the Linkerd workloads, before trying to verify.*
 
 ```bash
-$ linkerd check
+linkerd check
 ```
 
 If Linkerd is working as expected, or if there are problems, this tool will tell you.
